@@ -2,7 +2,7 @@ from unit import Unit
 
 
 class Terrain:
-    def __init__(self, terrain, walkable):
+    def __init__(self, terrain, walkable=True):
         self.terrain = terrain  # name of the terrain
         self.walkable = walkable
 
@@ -18,7 +18,7 @@ class Terrain:
 
 class Grass(Terrain):
     def __init__(self):
-        super().__init__(terrain="Grass", walkable=True)
+        super().__init__(terrain="Grass")
 
 
 class Wall(Terrain):
@@ -38,7 +38,7 @@ class Door(Terrain):
 
 class Key(Terrain):
     def __init__(self):
-        super().__init__(terrain="Key", walkable=True)
+        super().__init__(terrain="Key")
 
     def step_on(self, obj: Unit):
         obj.set_key()
@@ -46,7 +46,7 @@ class Key(Terrain):
 
 class Trap(Terrain):
     def __init__(self, damage=10):
-        super().__init__(terrain="Trap", walkable=True)
+        super().__init__(terrain="Trap")
         self.damage = damage
 
     def step_on(self, obj: Unit):
