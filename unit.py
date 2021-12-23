@@ -51,4 +51,4 @@ class Unit:
 class Ghost(Unit):
     def __init__(self, coord, hp):
         super().__init__(coord, hp)
-        self.name = 'Ghost'
+        self.name = "Ghost"
