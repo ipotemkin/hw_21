@@ -48,8 +48,8 @@ class GameController:
         self.field = Field(field=fields, unit=self.hero)
 
     def play(self):
+        self._draw_field()
         while self.game_on and not self.hero.escaped:
-            self._draw_field()
             command = input()
             if command == "a":
                 self.field.move_unit_left()
@@ -61,6 +61,8 @@ class GameController:
                 self.field.move_unit_down()
             if command in ["stop", "exit"]:
                 self.game_on = False
+
+            self._draw_field()
 
         if self.hero.escaped:
             print("Поздравляю! Вы нашли выход!")

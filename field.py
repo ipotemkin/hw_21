@@ -44,6 +44,3 @@ class Field:
 
     def get_field(self):
         return self.field
-
-    def cell(self):
-        return self.unit
