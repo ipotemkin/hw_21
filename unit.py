@@ -3,6 +3,9 @@ class UnitDied(Exception):
 
 
 class Unit:
+    # длинный список параметров. если передать escaped = true - игра закончится едва начавшись.
+    # Передача переменной got_key=True означает упрощение игры.
+    # можно изначально инициализировать как False.
     def __init__(self, coord, hp=100, got_key=False, escaped=False):
         self.hp = hp
         self.got_key = got_key
