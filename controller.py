@@ -2,10 +2,12 @@ from unit import Ghost
 from terrain import Wall, Grass, Key, Trap, Door
 from field import Cell, Field
 from constants import HIT_POINTS
+from errors import NoHeroError
+import os
 
 
 class GameController:
-    def __init__(self, maze: str, hero: Ghost = None, hp=HIT_POINTS):
+    def __init__(self, maze: str):
         self.mapping = {
             "Wall": "🔲",
             "Grass": "🍀",  # '⬜️',
@@ -15,15 +17,15 @@ class GameController:
             "Trap": "💀",
         }
         self.game_on = True
-        self.hero = hero
+        self.hero = None
         self.field = None
-        self.make_field(maze, hp=hp)
+        self.make_field(maze)
 
     @staticmethod
     def _make_field_template(template: str) -> list:
         return [[i for i in line.strip()] for line in template.strip().split("\n")]
 
-    def make_field(self, level_string: str, hp: int):
+    def make_field(self, level_string: str):
         field_template = self._make_field_template(level_string)
         fields = []
         for line_n, line in enumerate(field_template):
@@ -35,8 +37,7 @@ class GameController:
                     field_line.append(Cell(Grass()))
                 if item == "G":
                     field_line.append(Cell(Grass()))
-                    if not self.hero:
-                        self.hero = Ghost([item_n, line_n], hp=hp)
+                    self.hero = Ghost([item_n, line_n], hp=HIT_POINTS)
                 if item == "K":
                     field_line.append(Cell(Key()))
                 if item == "D":
@@ -44,6 +45,9 @@ class GameController:
                 if item == "T":
                     field_line.append(Cell(Trap()))
             fields.append(field_line)
+
+        if self.hero is None:
+            raise NoHeroError
 
         self.field = Field(field=fields, unit=self.hero)
 
@@ -71,6 +75,7 @@ class GameController:
             print("Нам жаль, что Вы уходите. Приходите еще!")
 
     def _draw_field(self):
+        # os.system('cls||clear')
         for y, line in enumerate(self.field.get_field()):
             s = ""
             for x, item in enumerate(line):

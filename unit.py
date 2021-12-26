@@ -1,5 +1,4 @@
-class UnitDied(Exception):
-    pass
+from errors import UnitDied
 
 
 class Unit:
